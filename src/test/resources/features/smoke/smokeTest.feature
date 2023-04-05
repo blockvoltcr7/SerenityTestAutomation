@@ -5,6 +5,7 @@ Feature: Smoke tests
 
     Given My first selenium smoke test
 
+  @smoke
   Scenario: smoke test Rest Assured
 
     Given My first rest assured smoke test

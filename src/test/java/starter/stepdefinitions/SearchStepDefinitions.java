@@ -10,6 +10,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
+import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 
@@ -44,6 +45,7 @@ public class SearchStepDefinitions {
         Response response = SerenityRest.get("https://www.google.com");
         int statusCode = response.getStatusCode();
         System.out.println("Status code: " + statusCode);
+        Assert.assertTrue(statusCode == 400);
         String body = response.getBody().asString();
         System.out.println("Response body: " + body);
     }
