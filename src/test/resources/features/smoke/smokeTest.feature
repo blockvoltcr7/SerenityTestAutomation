@@ -1,7 +1,8 @@
 Feature: Smoke tests
 
-  @debug98342
+  @smoke
   Scenario: Smoke test
+
     Given My first smoke test
 
 
