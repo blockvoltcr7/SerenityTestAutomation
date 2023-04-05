@@ -1,41 +1,44 @@
-plugins id "net.serenity-bdd.serenity-gradle-plugin" version "3.5.1"
-    id 'java'
-    id 'eclipse'
-    id 'idea'
-}
-
-defaultTasks 'clean','test','aggregate'
+defaultTasks 'clean', 'test', 'aggregate'
 
 repositories {
-    mavenCentral()
+    mavenLocal()
+    jcenter()
 }
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+buildscript {
+    repositories {
+        mavenLocal()
+        jcenter()
+    }
+    dependencies {
+        classpath("net.serenity-bdd:serenity-gradle-plugin:2.4.24")
+        classpath("net.serenity-bdd:serenity-single-page-report:2.4.24")
+    }
+}
 
-ext {
-    slf4jVersion = '1.7.7'
-    serenityCoreVersion = '3.6.21'
-    junitVersion = '5.8.2'
-    assertJVersion = '3.22.0'
-    logbackVersion = '1.2.10'
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'net.serenity-bdd.aggregator'
+
+sourceCompatibility = 11
+targetCompatibility = 11
+
+serenity {
+    reports = ["single-page-html"]
 }
 
 dependencies {
-    testImplementation "net.serenity-bdd:serenity-core:${serenityCoreVersion}",
-                "net.serenity-bdd:serenity-junit5:${serenityCoreVersion}",
-                "net.serenity-bdd:serenity-screenplay:${serenityCoreVersion}",
-                "net.serenity-bdd:serenity-ensure:${serenityCoreVersion}",
-                "net.serenity-bdd:serenity-screenplay-webdriver:${serenityCoreVersion}",
-                "net.serenity-bdd:serenity-cucumber:${serenityCoreVersion}",
-                "org.junit.jupiter:junit-jupiter-api:${junitVersion}",
-                "org.assertj:assertj-core:${assertJVersion}",
-                "ch.qos.logback:logback-classic:${logbackVersion}"
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+
+    testImplementation 'net.serenity-bdd:serenity-cucumber6:2.6.0'
+    testImplementation 'net.serenity-bdd:serenity-screenplay:2.6.0'
+    testImplementation 'net.serenity-bdd:serenity-screenplay-rest:2.6.0'
+    testImplementation 'net.serenity-bdd:serenity-rest-assured:2.6.0'
+    testImplementation 'io.rest-assured:rest-assured:4.3.2'
+    testImplementation 'junit:junit:4.13.1'
 }
 
 test {
-    useJUnitPlatform()
     testLogging.showStandardStreams = true
     systemProperties System.getProperties()
 }
