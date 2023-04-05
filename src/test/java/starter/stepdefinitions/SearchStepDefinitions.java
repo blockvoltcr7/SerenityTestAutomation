@@ -5,8 +5,16 @@ import io.cucumber.java.en.Given;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.restassured.response.Response;
 import net.serenitybdd.rest.SerenityRest;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.edge.EdgeDriver;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
 
 
 public class SearchStepDefinitions {
@@ -38,6 +46,23 @@ public class SearchStepDefinitions {
         System.out.println("Status code: " + statusCode);
         String body = response.getBody().asString();
         System.out.println("Response body: " + body);
+    }
+
+    @Given("My first HTTP Client smoke test")
+    public void smokeHTTPClient() throws InterruptedException, URISyntaxException, IOException {
+
+        HttpClient httpClient = HttpClientBuilder.create().build();
+        URIBuilder uriBuilder = new URIBuilder("https://www.google.com");
+        HttpGet request = new HttpGet(uriBuilder.build());
+        request.addHeader("Content-Type", "application/json");
+
+        httpClient.execute(request, response -> {
+            int statusCode = response.getStatusLine().getStatusCode();
+            System.out.println("Status code: " + statusCode);
+            String body = EntityUtils.toString(response.getEntity());
+            System.out.println("Response body: " + body);
+            return body;
+        });
     }
 
 }
