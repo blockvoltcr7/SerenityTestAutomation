@@ -1,8 +1,11 @@
 Feature: Smoke tests
 
+
+  Scenario: Smoke test Selenium
+
+    Given My first selenium smoke test
+
   @smoke
-  Scenario: Smoke test
+  Scenario: smoke test Rest Assured
 
-    Given My first smoke test
-
-
+    Given My first rest assured smoke test
