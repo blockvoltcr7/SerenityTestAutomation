@@ -15,3 +15,8 @@ Feature: Smoke tests
   Scenario: smoke test HTTP Client
 
     Given My first HTTP Client smoke test
+
+  @circuitBreaker
+  Scenario: Circuit Breaker Concept
+
+    Given Circuit Breaker Concept
